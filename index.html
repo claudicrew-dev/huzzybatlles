@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PAINHUB BATTLES</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="red">
+  <div id="app">
+    
+    <!-- LOADER -->
+    <div id="loader" class="loader">
+      <div class="loader-inner">
+        <div class="loader-logo">
+          <div class="loader-rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+          </div>
+          <span class="loader-emoji">🔥</span>
+        </div>
+        <h1 class="loader-title">PAINHUB</h1>
+        <p class="loader-sub">BATTLES</p>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header" class="header hidden">
+      <button class="hdr-btn" id="profileBtn">
+        <div class="hdr-avatar" id="hdrAvatar">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=default" alt="">
+        </div>
+      </button>
+      <div class="hdr-logo">
+        <span class="hdr-title">PAINHUB</span>
+        <span class="hdr-accent">BATTLES</span>
+      </div>
+      <div class="hdr-right">
+        <button class="hdr-btn icon" id="settingsBtn">
+          <span>⚙️</span>
+        </button>
+        <button class="hdr-btn icon" id="notifBtn">
+          <span>🔔</span>
+          <i class="hdr-badge hidden" id="notifBadge">0</i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main id="main" class="main hidden">
+
+      <!-- ========== HOME ========== -->
+      <section id="homeScreen" class="screen active">
+        
+        <!-- Search -->
+        <div class="search-wrap">
+          <div class="search-box">
+            <span class="search-ico">🔍</span>
+            <input type="text" id="searchInput" placeholder="Найти игрока..." autocomplete="off">
+            <button class="search-x hidden" id="searchX">✕</button>
+          </div>
+          <div class="search-drop hidden" id="searchDrop"></div>
+        </div>
+
+        <!-- My Card -->
+        <div class="my-card" id="myCard">
+          <div class="my-card-left">
+            <div class="my-card-ava">
+              <img src="" alt="" id="myCardAva">
+              <span class="my-card-lvl" id="myCardLvl">👤</span>
+            </div>
+            <div class="my-card-info">
+              <p class="my-card-name" id="myCardName">Загрузка...</p>
+              <p class="my-card-rank" id="myCardRank">Слушатель</p>
+            </div>
+          </div>
+          <div class="my-card-stats">
+            <div class="my-card-stat">
+              <b id="myCardScore">0</b>
+              <span>очков</span>
+            </div>
+            <div class="my-card-stat">
+              <b id="myCardPlace">#—</b>
+              <span>место</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Podium -->
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title"><span></span>АНГЕЛЫ ПЭИНХАБА</h2>
+            <button class="section-link" id="seeAllBtn">Смотреть всех →</button>
+          </div>
+          <div class="podium" id="podium">
+            <div class="podium-empty">
+              <span>🏆</span>
+              <p>Пока никто не прошёл тест</p>
+              <small>Стань первым!</small>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA Button -->
+        <button class="cta-btn" id="startBtn">
+          <div class="cta-glow"></div>
+          <span class="cta-icon">⚔️</span>
+          <div class="cta-text">
+            <b>НАЧАТЬ ТЕСТ</b>
+            <small>13 вопросов • 15 сек на ответ</small>
+          </div>
+          <span class="cta-arrow">→</span>
+        </button>
+
+        <!-- Menu -->
+        <div class="menu-grid">
+          <button class="menu-card" id="rulesBtn">
+            <span>📜</span>
+            <p>ПРАВИЛА</p>
+          </button>
+          <button class="menu-card" id="lbBtn">
+            <span>🏆</span>
+            <p>PAINHUB</p>
+          </button>
+          <button class="menu-card" id="achBtn">
+            <span>🎯</span>
+            <p>ДОСТИЖЕНИЯ</p>
+          </button>
+          <button class="menu-card" id="statsBtn">
+            <span>📊</span>
+            <p>СТАТИСТИКА</p>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ========== QUIZ ========== -->
+      <section id="quizScreen" class="screen">
+        <div class="quiz">
+          <div class="quiz-head">
+            <button class="quiz-close" id="quizClose">✕</button>
+            <div class="quiz-num"><span id="qCur">1</span>/<span id="qTot">13</span></div>
+            <div class="quiz-score"><span>⭐</span><b id="qPts">0</b></div>
+          </div>
+
+          <div class="quiz-timer">
+            <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+            <span class="timer-sec" id="timerSec">15</span>
+          </div>
+
+          <div class="quiz-progress"><div class="qp-fill" id="qpFill"></div></div>
+
+          <div class="quiz-q">
+            <div class="quiz-meta">
+              <span class="quiz-pts" id="qPoints">+2 очка</span>
+              <span class="quiz-stat" id="qStat">75% верных</span>
+            </div>
+            <h2 class="quiz-question" id="qText">Загрузка...</h2>
+          </div>
+
+          <div class="quiz-answers" id="qAnswers"></div>
+        </div>
+      </section>
+
+      <!-- ========== RESULT ========== -->
+      <section id="resultScreen" class="screen">
+        <div class="result">
+          <div class="result-bg"></div>
+          <div class="result-content">
+            <div class="result-emoji" id="resEmoji">🎉</div>
+            <h1 class="result-title" id="resTitle">Отлично!</h1>
+            
+            <div class="result-rank-badge" id="resRankBadge">
+              <span id="resRankIcon">👼</span>
+              <span id="resRankText">Ангел</span>
+            </div>
+
+            <div class="result-score">
+              <b id="resScore">0</b>
+              <span>очков из 28</span>
+            </div>
+
+            <div class="result-row">
+              <div class="result-item">
+                <b id="resCorrect">0/13</b>
+                <span>верных</span>
+              </div>
+              <div class="result-item">
+                <b id="resPlace">#1</b>
+                <span>место</span>
+              </div>
+              <div class="result-item">
+                <b id="resTime">0с</b>
+                <span>среднее</span>
+              </div>
+            </div>
+
+            <div class="result-ach hidden" id="resAch">
+              <p>🎯 Новые ачивки!</p>
+              <div class="result-ach-list" id="resAchList"></div>
+            </div>
+
+            <div class="result-reactions" id="resReactions">
+              <small>Реакции друзей:</small>
+              <div class="reactions-list" id="reactionsList">
+                <span class="no-reactions">Пока нет</span>
+              </div>
+            </div>
+
+            <div class="result-btns">
+              <button class="res-btn primary" id="resHome"><span>🏠</span> Главная</button>
+              <button class="res-btn" id="resShare"><span>📤</span> Поделиться</button>
+              <button class="res-btn" id="resAnalytics"><span>📊</span> Аналитика</button>
+            </div>
+          </div>
+          <div class="confetti" id="confetti"></div>
+        </div>
+      </section>
+
+      <!-- ========== ANALYTICS ========== -->
+      <section id="analyticsScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="analyticsBack">←</button>
+          <h1>АНАЛИТИКА</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="analytics-cards">
+          <div class="a-card"><b id="aScore">0</b><span>очков</span></div>
+          <div class="a-card"><b id="aCorrect">0%</b><span>верных</span></div>
+          <div class="a-card"><b id="aTime">0с</b><span>среднее</span></div>
+        </div>
+
+        <h3 class="sub-title">Твои ответы:</h3>
+        <div class="analytics-list" id="analyticsList"></div>
+      </section>
+
+      <!-- ========== LEADERBOARD ========== -->
+      <section id="lbScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="lbBack">←</button>
+          <h1>РЕЙТИНГ</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="lb-search">
+          <span>🔍</span>
+          <input type="text" id="lbSearchInput" placeholder="Поиск...">
+        </div>
+
+        <div class="lb-list" id="lbList"></div>
+      </section>
+
+      <!-- ========== ACHIEVEMENTS ========== -->
+      <section id="achScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="achBack">←</button>
+          <h1>ДОСТИЖЕНИЯ АНГЕЛОВ</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="ach-header">
+          <span id="achCount">0/6</span>
+          <div class="ach-bar"><div class="ach-fill" id="achFill"></div></div>
+        </div>
+
+        <div class="ach-list" id="achList"></div>
+      </section>
+
+      <!-- ========== GLOBAL STATS ========== -->
+      <section id="gStatsScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="gStatsBack">←</button>
+          <h1>СТАТИСТИКА</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="gs-cards">
+          <div class="gs-card"><span>👥</span><b id="gsPlayers">0</b><small>игроков</small></div>
+          <div class="gs-card"><span>✅</span><b id="gsCompleted">0</b><small>прошли</small></div>
+          <div class="gs-card"><span>⭐</span><b id="gsAvg">0</b><small>средний</small></div>
+          <div class="gs-card"><span>👑</span><b id="gsPerfect">0</b><small>идеальных</small></div>
+        </div>
+
+        <h3 class="sub-title">Сложность вопросов:</h3>
+        <div class="gs-questions" id="gsQuestions"></div>
+      </section>
+
+      <!-- ========== PROFILE ========== -->
+      <section id="profileScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="profileBack">←</button>
+          <h1>ПРОФИЛЬ</h1>
+          <button class="icon-btn hidden" id="adminToggle">⚙️</button>
+        </div>
+
+        <div class="profile-hero">
+          <div class="profile-ava-wrap" id="profileAvaWrap">
+            <div class="profile-ava" id="profileAva"><img src="" alt=""></div>
+            <span class="profile-lvl" id="profileLvl">👤</span>
+          </div>
+          <h2 class="profile-name" id="profileName">Имя</h2>
+          <p class="profile-user" id="profileUser">@username</p>
+          <div class="profile-rank" id="profileRankBadge">
+            <span id="profileRankIcon">👤</span>
+            <span id="profileRankText">Слушатель</span>
+          </div>
+        </div>
+
+        <div class="profile-stats">
+          <div class="p-stat main"><b id="pScore">0</b><span>очков</span></div>
+          <div class="p-stat"><b id="pPlace">#—</b><span>место</span></div>
+          <div class="p-stat"><b id="pAch">0/6</b><span>ачивок</span></div>
+          <div class="p-stat"><b id="pLikes">0</b><span>❤️</span></div>
+        </div>
+
+        <div class="profile-actions hidden" id="profileActions">
+          <button class="p-action" id="likeBtn"><span>🤍</span>Нравится</button>
+          <button class="p-action" id="friendBtn"><span>➕</span>В друзья</button>
+          <button class="p-action" id="compareBtn"><span>⚔️</span>Сравнить</button>
+          <button class="p-action" id="reactBtn"><span>😀</span>Реакция</button>
+        </div>
+
+        <div class="profile-section">
+          <h3>🎯 Ачивки</h3>
+          <div class="profile-ach-row" id="profileAchRow"><span class="muted">Нет ачивок</span></div>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-head">
+            <h3>💬 Комментарии</h3>
+            <button class="section-link hidden" id="addCommentBtn">+ Написать</button>
+          </div>
+          <div class="comments" id="comments"><p class="muted">Пока нет комментариев</p></div>
+        </div>
+
+        <div class="profile-info">
+          <div class="p-info-row"><span>📅 Регистрация</span><b id="pJoined">—</b></div>
+          <div class="p-info-row"><span>🎮 Тест пройден</span><b id="pTestDate">Нет</b></div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel hidden" id="adminPanel">
+          <h3>🔧 Админ-панель</h3>
+          <div class="admin-input-wrap">
+            <label>ID пользователя:</label>
+            <input type="number" id="adminInput" placeholder="Введите ID">
+          </div>
+          <div class="admin-btns">
+            <button class="adm-btn" id="admResetTest">🔄 Сброс теста</button>
+            <button class="adm-btn" id="admResetScore">📊 Сброс очков</button>
+            <button class="adm-btn warn" id="admBlock">🚫 Бан</button>
+            <button class="adm-btn" id="admUnblock">✅ Разбан</button>
+            <button class="adm-btn" id="admGiveAdmin">👑 Дать админа</button>
+            <button class="adm-btn warn" id="admTakeAdmin">❌ Забрать</button>
+          </div>
+          <div class="admin-input-wrap">
+            <label>Рассылка:</label>
+            <textarea id="broadcastInput" placeholder="Сообщение..."></textarea>
+            <button class="adm-btn primary full" id="admBroadcast">📢 Отправить</button>
+          </div>
+          <button class="adm-btn danger full" id="admResetAll">⚠️ СБРОСИТЬ ВСЁ</button>
+        </div>
+      </section>
+
+      <!-- ========== COMPARE ========== -->
+      <section id="compareScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="compareBack">←</button>
+          <h1>СРАВНЕНИЕ</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="compare-top">
+          <div class="compare-user">
+            <div class="compare-ava" id="cmpAva1"><img src="" alt=""></div>
+            <p id="cmpName1">Ты</p>
+          </div>
+          <span class="compare-vs">VS</span>
+          <div class="compare-user">
+            <div class="compare-ava" id="cmpAva2"><img src="" alt=""></div>
+            <p id="cmpName2">Друг</p>
+          </div>
+        </div>
+
+        <div class="compare-stats">
+          <div class="cmp-row"><b id="cs1">0</b><span>Очки</span><b id="cs2">0</b></div>
+          <div class="cmp-row"><b id="cp1">#—</b><span>Место</span><b id="cp2">#—</b></div>
+          <div class="cmp-row"><b id="cc1">0</b><span>Верных</span><b id="cc2">0</b></div>
+          <div class="cmp-row"><b id="ct1">—</b><span>Время</span><b id="ct2">—</b></div>
+        </div>
+
+        <h3 class="sub-title">По вопросам:</h3>
+        <div class="compare-questions" id="compareQuestions"></div>
+      </section>
+
+      <!-- ========== NOTIFICATIONS ========== -->
+      <section id="notifScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="notifBack">←</button>
+          <h1>УВЕДОМЛЕНИЯ</h1>
+          <div class="spacer"></div>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+      </section>
+
+      <!-- ========== SETTINGS ========== -->
+      <section id="settingsScreen" class="screen">
+        <div class="scr-head">
+          <button class="back-btn" id="settingsBack">←</button>
+          <h1>НАСТРОЙКИ</h1>
+          <div class="spacer"></div>
+        </div>
+
+        <div class="settings-group">
+          <h3>🎨 Тема</h3>
+          <div class="theme-grid" id="themeGrid">
+            <button class="theme-btn active" data-theme="red"><i class="t-red"></i>Красная</button>
+            <button class="theme-btn" data-theme="dark"><i class="t-dark"></i>Тёмная</button>
+            <button class="theme-btn" data-theme="purple"><i class="t-purple"></i>Фиолет</button>
+            <button class="theme-btn" data-theme="ice"><i class="t-ice"></i>Лёд</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>🔊 Звук и вибрация</h3>
+          <label class="setting-toggle">
+            <span>Звуковые эффекты</span>
+            <input type="checkbox" id="sndToggle" checked>
+            <i></i>
+          </label>
+          <label class="setting-toggle">
+            <span>Вибрация</span>
+            <input type="checkbox" id="vibToggle" checked>
+            <i></i>
+          </label>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ========== MODALS ========== -->
+
+    <!-- Confirm -->
+    <div id="confirmModal" class="modal hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-box">
+        <span class="modal-emoji">⚠️</span>
+        <h2>ВНИМАНИЕ!</h2>
+        <p>Тест можно пройти только <b>ОДИН раз</b>!<br>У тебя 15 секунд на каждый вопрос.</p>
+        <div class="modal-btns">
+          <button class="m-btn" id="confirmNo">Назад</button>
+          <button class="m-btn primary" id="confirmYes">Начать!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <div id="rulesModal" class="modal hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-box wide">
+        <div class="modal-head">
+          <h2>📜 Правила</h2>
+          <button class="modal-x" id="rulesX">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="rule"><span>⚔️</span><div><b>Один шанс</b><p>Тест можно пройти только один раз</p></div></div>
+          <div class="rule"><span>⏱️</span><div><b>15 секунд</b><p>На каждый вопрос</p></div></div>
+          <div class="rule"><span>⭐</span><div><b>Очки</b><p>Сложные вопросы = больше очков. Макс: 28</p></div></div>
+          <div class="rule"><span>🎯</span><div><b>Достижения</b><p>Выполняй условия — получай награды</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comment -->
+    <div id="commentModal" class="modal hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-box">
+        <h2>💬 Комментарий</h2>
+        <textarea id="commentInput" placeholder="Напиши что-нибудь..." maxlength="150"></textarea>
+        <small><span id="commentLen">0</span>/150</small>
+        <div class="modal-btns">
+          <button class="m-btn" id="commentNo">Отмена</button>
+          <button class="m-btn primary" id="commentYes">Отправить</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reaction -->
+    <div id="reactionModal" class="modal hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-box small">
+        <h2>Выбери реакцию</h2>
+        <div class="reaction-pick">
+          <button data-r="🔥">🔥</button>
+          <button data-r="👏">👏</button>
+          <button data-r="😮">😮</button>
+          <button data-r="💀">💀</button>
+          <button data-r="❤️">❤️</button>
+          <button data-r="😂">😂</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toasts -->
+    <div id="toasts"></div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
